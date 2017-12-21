@@ -1,19 +1,18 @@
+#pragma once
 #include "IntervalTree.h"
-#include "Node.h"
-#include "Interval.h"
+#include <iostream>
 
-IntervalTree::~IntervalTree() {
-    if (root != nullptr) {
-      delete root;
-    }
+
+IntervalTree::IntervalTree() {
+  root = nullptr;
 }
 
 void IntervalTree::insert(Interval i, std::string &value) {
   if (root == nullptr) {
     initializeRoot(i,value);
   }
-
 }
+
 void IntervalTree::initializeRoot(Interval i, std::string &value) {
   root = new Node();
   root->left = nullptr;
@@ -23,6 +22,18 @@ void IntervalTree::initializeRoot(Interval i, std::string &value) {
   root->value = value;
 }
 
-std::string IntervalTree:: search(Interval i) {
+std::string IntervalTree::search(Interval i) {
+  if (root == nullptr) {
+    throw NoMatchException("No match found");
+  } else {
+    return "";
+  }
+}
 
+bool IntervalTree::doTheyOverlap(Interval i1, Interval i2) {
+  if (i1.start <= i2.end && i2.start <=i1.end) {
+    return true;
+  } else {
+    return false;
+  }
 }
