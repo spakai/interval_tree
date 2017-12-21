@@ -2,7 +2,6 @@
 #include "IntervalTree.h"
 #include <iostream>
 
-
 IntervalTree::IntervalTree() {
   root = nullptr;
 }
@@ -26,7 +25,11 @@ std::string IntervalTree::search(Interval i) {
   if (root == nullptr) {
     throw NoMatchException("No match found");
   } else {
-    return "";
+    if(doTheyOverlap(root->interval, i)) {
+      return root->value;
+    } else {
+      throw NoMatchException("No match found");
+    }
   }
 }
 
