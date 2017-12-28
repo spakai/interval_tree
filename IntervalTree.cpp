@@ -1,42 +1,61 @@
-#pragma once
 #include "IntervalTree.h"
-#include <iostream>
 
 IntervalTree::IntervalTree() {
   root = nullptr;
 }
 
-void IntervalTree::insert(Interval i, std::string &value) {
-  if (root == nullptr) {
-    initializeRoot(i,value);
+void IntervalTree::insert(Interval interval, std::string &value) {
+
+  auto key = interval.start;
+
+  Node* newNode = createNode(interval, value);
+
+  if ( root == nullptr) {
+    root = newNode;
+    return;
   }
-}
 
-void IntervalTree::initializeRoot(Interval i, std::string &value) {
-  root = new Node();
-  root->left = nullptr;
-  root->right = nullptr;
-  root->interval = i;
-  root->max = i.end;
-  root->value = value;
-}
-
-std::string IntervalTree::search(Interval i) {
-  if (root == nullptr) {
-    throw NoMatchException("No match found");
-  } else {
-    if(doTheyOverlap(root->interval, i)) {
-      return root->value;
+  Node* parent = nullptr;
+  Node* curr = root;
+  while (curr != nullptr) {
+    parent = curr;
+    if (key < curr->interval.start) {
+      curr = curr->left;
+    } else if (key > curr->interval.start) {
+        curr = curr->right;
     } else {
-      throw NoMatchException("No match found");
+        //do nothing
     }
   }
+
+  if (key < parent->interval.start) {
+    parent->left = newNode;
+  } else {
+    parent->right = newNode;
+  }
 }
 
-bool IntervalTree::doTheyOverlap(Interval i1, Interval i2) {
-  if (i1.start <= i2.end && i2.start <=i1.end) {
+Node* IntervalTree::createNode(Interval interval, std::string &value) {
+  Node* node = new Node();
+  node->left = nullptr;
+  node->right = nullptr;
+  node->interval = interval;
+  node->max = interval.end;
+  node->value = value;
+  return node;
+}
+
+
+std::string IntervalTree::find(Interval interval) {
+  auto key = interval.start;
+
+}
+
+bool IntervalTree::doTheyOverlap(Interval firstInterval, Interval secondInterval) {
+  if (firstInterval.start <= secondInterval.end &&
+    secondInterval.start <=firstInterval.end) {
     return true;
   } else {
-    return false;
+      return false;
   }
 }
