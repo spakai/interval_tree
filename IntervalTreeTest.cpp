@@ -29,3 +29,12 @@ TEST_F(IntervalTreeTest, Insertion) {
     intervalTree.insert(i2,v2);
     intervalTree.insert(i3,v3);
 }
+
+TEST_F(IntervalTreeTest, SearchWhenThereTreeIsEmpty) {
+    Interval i ;
+    i.start = 6;
+    i.end = 6;
+
+    ASSERT_THROW(intervalTree.find(i), NoMatchException);
+
+}

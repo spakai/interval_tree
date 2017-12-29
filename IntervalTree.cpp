@@ -33,6 +33,10 @@ void IntervalTree::insert(Interval interval, std::string &value) {
   } else {
     parent->right = newNode;
   }
+
+  if (parent->max < key) {
+    parent->max = key;
+  }
 }
 
 Node* IntervalTree::createNode(Interval interval, std::string &value) {
@@ -46,8 +50,18 @@ Node* IntervalTree::createNode(Interval interval, std::string &value) {
 }
 
 
+
 std::string IntervalTree::find(Interval interval) {
   auto key = interval.start;
+
+  if ( root == nullptr) {
+    throw NoMatchException("No match found");
+  }
+
+
+
+  return "";
+
 
 }
 
