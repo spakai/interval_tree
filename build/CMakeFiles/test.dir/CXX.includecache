@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/prakashs/interval_tree/Interval.h
+
+/home/prakashs/interval_tree/IntervalTree.cpp
+IntervalTree.h
+/home/prakashs/interval_tree/IntervalTree.h
+
+/home/prakashs/interval_tree/IntervalTree.h
+string
+-
+Node.h
+/home/prakashs/interval_tree/Node.h
+Interval.h
+/home/prakashs/interval_tree/Interval.h
+NoMatchException.h
+/home/prakashs/interval_tree/NoMatchException.h
+
+/home/prakashs/interval_tree/NoMatchException.h
+string
+-
+exception
+-
+
+/home/prakashs/interval_tree/Node.h
+Interval.h
+/home/prakashs/interval_tree/Interval.h
+

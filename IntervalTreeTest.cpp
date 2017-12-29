@@ -38,3 +38,56 @@ TEST_F(IntervalTreeTest, SearchWhenThereTreeIsEmpty) {
     ASSERT_THROW(intervalTree.find(i), NoMatchException);
 
 }
+
+TEST_F(IntervalTreeTest, SearchSuccessfulWhenRootOverlapsTheInterval) {
+  std::string v1 = "1621";
+  std::string v2 = "2530";
+  std::string v3 = "0809";
+  intervalTree.insert(i1,v1);
+  intervalTree.insert(i2,v2);
+  intervalTree.insert(i3,v3);
+
+  Interval i ;
+  i.start = 17;
+  i.end = 17;
+
+
+  ASSERT_THAT(intervalTree.find(i), Eq("1621"));
+
+}
+
+
+TEST_F(IntervalTreeTest, SearchSuccessfulWhenRootChildrenOverlapsTheInterval) {
+  std::string v1 = "1621";
+  std::string v2 = "2530";
+  std::string v3 = "0809";
+  intervalTree.insert(i1,v1);
+  intervalTree.insert(i2,v2);
+  intervalTree.insert(i3,v3);
+
+  Interval i ;
+  i.start = 27;
+  i.end = 27;
+
+
+  ASSERT_THAT(intervalTree.find(i), Eq("2530"));
+
+}
+
+TEST_F(IntervalTreeTest, SearchFailedBecauseNoOverlappingInterval) {
+  std::string v1 = "1621";
+  std::string v2 = "2530";
+  std::string v3 = "0809";
+  intervalTree.insert(i1,v1);
+  intervalTree.insert(i2,v2);
+  intervalTree.insert(i3,v3);
+
+  Interval i ;
+  i.start = 10;
+  i.end = 10;
+
+
+  ASSERT_THROW(intervalTree.find(i), NoMatchException);
+
+
+}
