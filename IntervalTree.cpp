@@ -21,10 +21,8 @@ void IntervalTree::insert(Interval interval, std::string &value) {
     parent = curr;
     if (key < curr->interval.start) {
       curr = curr->left;
-    } else if (key > curr->interval.start) {
-        curr = curr->right;
     } else {
-        //do nothing
+        curr = curr->right;
     }
   }
 
