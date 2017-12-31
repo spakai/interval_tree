@@ -9,6 +9,7 @@ class IntervalTreeTest : public Test {
         Interval i1;
         Interval i2;
         Interval i3;
+        Interval i4;
         IntervalTree intervalTree;
 
         void SetUp() override {
@@ -18,6 +19,8 @@ class IntervalTreeTest : public Test {
            i2.end = 30;
            i3.start = 8;
            i3.end = 9;
+           i4.start = 16;
+           i4.end = 24;
         }
 };
 
@@ -88,6 +91,26 @@ TEST_F(IntervalTreeTest, SearchFailedBecauseNoOverlappingInterval) {
 
 
   ASSERT_THROW(intervalTree.find(i), NoMatchException);
+
+
+}
+
+TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
+  std::string v1 = "1621";
+  std::string v2 = "2530";
+  std::string v3 = "0809";
+  std::string v4 = "1624";
+
+  intervalTree.insert(i1,v1);
+  intervalTree.insert(i2,v2);
+  intervalTree.insert(i3,v3);
+  intervalTree.insert(i4,v4);
+
+  Interval i ;
+  i.start =24 ;
+  i.end = 24;
+
+  ASSERT_THAT(intervalTree.find(i), Eq("1624"));
 
 
 }
