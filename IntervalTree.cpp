@@ -6,7 +6,7 @@ IntervalTree::IntervalTree() {
 
 void IntervalTree::insert(Interval interval, std::string &value) {
 
-  auto key = interval.start;
+  auto key = interval.getStart();
 
   Node* newNode = createNode(interval, value);
 
@@ -19,14 +19,14 @@ void IntervalTree::insert(Interval interval, std::string &value) {
   Node* curr = root;
   while (curr != nullptr) {
     parent = curr;
-    if (key < curr->interval.start) {
+    if (key < curr->interval.getStart()) {
       curr = curr->left;
     } else {
         curr = curr->right;
     }
   }
 
-  if (key < parent->interval.start) {
+  if (key < parent->interval.getStart()) {
     parent->left = newNode;
   } else {
     parent->right = newNode;
@@ -42,13 +42,13 @@ Node* IntervalTree::createNode(Interval interval, std::string &value) {
   node->left = nullptr;
   node->right = nullptr;
   node->interval = interval;
-  node->max = interval.end;
+  node->max = interval.getEnd();
   node->value = value;
   return node;
 }
 
 std::string IntervalTree::find(Interval interval) {
-  auto key = interval.start;
+  auto key = interval.getStart();
 
   if ( root == nullptr) {
     throw NoMatchException("No match found");
@@ -57,7 +57,7 @@ std::string IntervalTree::find(Interval interval) {
   Node* curr = root;
 
   while (curr != nullptr) {
-      if(doTheyOverlap(interval, curr->interval)) {
+      if(interval.doTheyOverlap(curr->interval)) {
         return curr->value;
       }
 
@@ -70,13 +70,4 @@ std::string IntervalTree::find(Interval interval) {
   }
 
   throw NoMatchException("No match found");
-}
-
-bool IntervalTree::doTheyOverlap(Interval firstInterval, Interval secondInterval) {
-  if (firstInterval.start <= secondInterval.end &&
-    secondInterval.start <=firstInterval.end) {
-    return true;
-  } else {
-      return false;
-  }
 }
