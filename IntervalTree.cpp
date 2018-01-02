@@ -4,7 +4,7 @@ IntervalTree::IntervalTree() {
   root = nullptr;
 }
 
-void IntervalTree::insert(Interval interval, std::string &value) {
+void IntervalTree::insert(Interval &interval, std::string &value) {
 
   auto key = interval.getStart();
 
@@ -37,7 +37,7 @@ void IntervalTree::insert(Interval interval, std::string &value) {
   }
 }
 
-Node* IntervalTree::createNode(Interval interval, std::string &value) {
+Node* IntervalTree::createNode(Interval &interval, std::string &value) {
   Node* node = new Node();
   node->left = nullptr;
   node->right = nullptr;
@@ -47,7 +47,7 @@ Node* IntervalTree::createNode(Interval interval, std::string &value) {
   return node;
 }
 
-std::string IntervalTree::find(Interval interval) {
+std::string IntervalTree::find(Interval &interval) {
   auto key = interval.getStart();
 
   if ( root == nullptr) {
@@ -55,9 +55,8 @@ std::string IntervalTree::find(Interval interval) {
   }
 
   Node* curr = root;
-
   while (curr != nullptr) {
-      if(interval.doTheyOverlap(curr->interval)) {
+      if(curr->interval.doTheyOverlap(interval)) {
         return curr->value;
       }
 

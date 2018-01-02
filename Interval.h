@@ -1,7 +1,10 @@
 #pragma once
+class IntervalBuilder;
 
 class Interval {
   public:
+
+    friend IntervalBuilder;
 
     Interval() {
       this->start = 0;
@@ -13,24 +16,54 @@ class Interval {
       this->end = end;
     }
 
-    bool doTheyOverlap(Interval interval) {                           
+    bool doTheyOverlap(Interval& interval) {                           
       if (this->start <= interval.end &&                                                            
         interval.start <=this->end) {                                                               
         return true;                                                                                              
       } else {                                                                                                    
         return false;                                                                                           
       }                                                                                                           
-    }   
+    }  
 
-  long int getStart() {
-    return start;
-  }      
+    long int getStart() {
+      return start;
+    }      
 
-  long int getEnd() {
-    return end;
-  } 
+    long int getEnd() {
+      return end;
+    } 
 
   private:
     long int start;
     long int end;
+};
+
+class IntervalBuilder {
+  public:
+    IntervalBuilder& greaterThanOrEqual(long int i) {
+      interval.start = i;
+      return *this;
+    }  
+
+    IntervalBuilder& lessThan(long int i) {
+      interval.end = i - 1;
+      return *this;
+    }
+
+    IntervalBuilder& greaterThan(long int i) {
+      interval.start = i + 1;
+      return *this;
+    } 
+
+    IntervalBuilder& lessThanOrEqual(long int i) {
+      interval.end = i;
+      return *this;
+    } 
+
+    Interval build() {
+      return std::move(interval);
+    }
+
+    private:  
+      Interval interval;
 };

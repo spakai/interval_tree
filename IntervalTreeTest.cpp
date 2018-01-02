@@ -72,8 +72,13 @@ TEST_F(IntervalTreeTest, SearchFailedBecauseNoOverlappingInterval) {
 }
 
 TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
+  Interval iv = IntervalBuilder()
+                        .greaterThanOrEqual(16)
+                        .lessThanOrEqual(21)
+                        .build();
 
-  intervalTree.insert(i1,v1);
+                        
+  intervalTree.insert(iv,v1);
   intervalTree.insert(i2,v2);
   intervalTree.insert(i3,v3);
   intervalTree.insert(i4,v4);
@@ -81,6 +86,5 @@ TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
   Interval i(24,24);
 
   ASSERT_THAT(intervalTree.find(i), Eq("1624"));
-
 
 }
