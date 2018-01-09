@@ -8,7 +8,7 @@ class Interval {
 
     Interval() {
       this->start = 0;
-      this->end   = 0;
+      this->end = 0;
     }
 
     Interval(long int start, long int end) {
@@ -24,6 +24,10 @@ class Interval {
         return false;                                                                                           
       }                                                                                                           
     }  
+
+    bool operator==(const Interval &i1){
+        return (this->start = i1.start && this->end == i1.end);
+    }
 
     long int getStart() {
       return start;

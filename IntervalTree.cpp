@@ -47,18 +47,20 @@ Node* IntervalTree::createNode(Interval &interval, std::string &value) {
   return node;
 }
 
-std::string IntervalTree::find(Interval &interval) {
-  auto key = interval.getStart();
-
+std::set<std::string> IntervalTree::find(Interval &interval) {
   if ( root == nullptr) {
     throw NoMatchException("No match found");
   }
 
   Node* curr = root;
+  std::set<std::string> results;
   while (curr != nullptr) {
       if(curr->interval.doTheyOverlap(interval)) {
-        return curr->value;
+        results.insert(curr->value);
+        return results;
       }
+
+      auto key = interval.getStart();
 
       if(curr->left != nullptr && curr->left->max >= key) {
             curr = curr->left;

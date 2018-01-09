@@ -1,4 +1,6 @@
 #pragma once
+
+#include <set>
 #include <string>
 #include "Node.h"
 #include "Interval.h"
@@ -8,9 +10,9 @@ class IntervalTree {
     public:
         IntervalTree();
         void insert(Interval &i, std::string &value);
-        std::string find(Interval &i);
+        std::set<std::string> find(Interval &i);
 
     private:
         Node* createNode(Interval &i, std::string &value);
-        Node *root;
+        Node* root;
 };

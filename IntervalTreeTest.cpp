@@ -46,7 +46,7 @@ TEST_F(IntervalTreeTest, SearchSuccessfulWhenRootOverlapsTheInterval) {
 
   Interval i(17,17);
 
-  ASSERT_THAT(intervalTree.find(i), Eq("1621"));
+  ASSERT_THAT(intervalTree.find(i), ElementsAre("1621"));
 
 }
 
@@ -57,7 +57,7 @@ TEST_F(IntervalTreeTest, SearchSuccessfulWhenRootChildrenOverlapsTheInterval) {
 
   Interval i(27,27) ;
 
-  ASSERT_THAT(intervalTree.find(i), Eq("2530"));
+  ASSERT_THAT(intervalTree.find(i), ElementsAre("2530"));
 
 }
 
@@ -85,6 +85,26 @@ TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
 
   Interval i(24,24);
 
-  ASSERT_THAT(intervalTree.find(i), Eq("1624"));
+  ASSERT_THAT(intervalTree.find(i), ElementsAre("1624"));
+
+}
+
+TEST_F(IntervalTreeTest, InsertDuplicateIntervals) {
+  Interval iv = IntervalBuilder()
+                        .greaterThanOrEqual(16)
+                        .lessThanOrEqual(24)
+                        .build();
+
+                        
+  intervalTree.insert(i1,v1);
+  intervalTree.insert(i2,v2);
+  intervalTree.insert(i3,v3);
+  intervalTree.insert(iv,v2);
+  intervalTree.insert(i4,v4);
+ 
+
+  Interval i(24,24);
+
+  ASSERT_THAT(intervalTree.find(i), ElementsAre("1624"));
 
 }
