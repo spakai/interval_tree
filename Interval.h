@@ -26,7 +26,7 @@ class Interval {
     }  
 
     bool operator==(const Interval &i1){
-        return (this->start = i1.start && this->end == i1.end);
+        return (this->start == i1.start && this->end == i1.end);
     }
 
     long int getStart() {

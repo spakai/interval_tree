@@ -108,3 +108,4 @@ TEST_F(IntervalTreeTest, InsertDuplicateIntervals) {
   ASSERT_THAT(intervalTree.find(i), ElementsAre("1624"));
 
 }
+

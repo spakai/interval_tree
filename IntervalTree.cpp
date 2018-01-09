@@ -17,15 +17,23 @@ void IntervalTree::insert(Interval &interval, std::string &value) {
 
   Node* parent = nullptr;
   Node* curr = root;
+
+  bool isDuplicate = false;
   while (curr != nullptr) {
     parent = curr;
 
-    if (key < curr->interval.getStart()) {
+    if (curr->interval == interval) {
+        isDuplicate = true;
+        curr->values.insert(value);
+        break; 
+    } else if (key < curr->interval.getStart()) {
       curr = curr->left;
     } else {
         curr = curr->right;
     }
   }
+
+  if (isDuplicate) return;
 
   if (key < parent->interval.getStart()) {
     parent->left = newNode;
