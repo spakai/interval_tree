@@ -19,6 +19,7 @@ void IntervalTree::insert(Interval &interval, std::string &value) {
   Node* curr = root;
   while (curr != nullptr) {
     parent = curr;
+
     if (key < curr->interval.getStart()) {
       curr = curr->left;
     } else {
@@ -43,7 +44,7 @@ Node* IntervalTree::createNode(Interval &interval, std::string &value) {
   node->right = nullptr;
   node->interval = interval;
   node->max = interval.getEnd();
-  node->value = value;
+  node->values.insert(value);
   return node;
 }
 
@@ -53,11 +54,10 @@ std::set<std::string> IntervalTree::find(Interval &interval) {
   }
 
   Node* curr = root;
-  std::set<std::string> results;
   while (curr != nullptr) {
+
       if(curr->interval.doTheyOverlap(interval)) {
-        results.insert(curr->value);
-        return results;
+        return curr->values;
       }
 
       auto key = interval.getStart();

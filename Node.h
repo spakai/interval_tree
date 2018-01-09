@@ -6,5 +6,5 @@ struct Node {
   long int max;
   Node * left;
   Node * right;
-  std::string value;
+  std::set<std::string> values;
 };
