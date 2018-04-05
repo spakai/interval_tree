@@ -8,37 +8,32 @@ void IntervalTree::insert(Interval &interval, std::string &value) {
 
   auto key = interval.getStart();
 
-  Node* newNode = createNode(interval, value);
-
   if ( root == nullptr) {
-    root = newNode;
+    root = createNode(interval, value);
     return;
   }
 
   Node* parent = nullptr;
   Node* curr = root;
 
-  bool isDuplicate = false;
   while (curr != nullptr) {
     parent = curr;
 
     if (curr->interval == interval) {
-        isDuplicate = true;
         curr->values.insert(value);
-        break; 
+        return;
     } else if (key < curr->interval.getStart()) {
-      curr = curr->left;
+        curr = curr->left;
     } else {
         curr = curr->right;
     }
   }
 
-  if (isDuplicate) return;
 
   if (key < parent->interval.getStart()) {
-    parent->left = newNode;
+    parent->left = createNode(interval, value);
   } else {
-    parent->right = newNode;
+    parent->right = createNode(interval, value);
   }
 
   if (parent->max < key) {
@@ -71,9 +66,9 @@ std::set<std::string> IntervalTree::find(Interval &interval) {
       auto key = interval.getStart();
 
       if(curr->left != nullptr && curr->left->max >= key) {
-            curr = curr->left;
+        curr = curr->left;
       } else {
-            curr = curr->right;
+        curr = curr->right;
       }
 
   }

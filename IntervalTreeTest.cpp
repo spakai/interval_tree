@@ -20,7 +20,7 @@ class IntervalTreeTest : public Test {
           this->i1 = i1;
           this->i2 = i2;
           this->i3 = i3;
-          this->i4 = i4; 
+          this->i4 = i4;
           std::string v1 = "1621";
           std::string v2 = "2530";
           std::string v3 = "0809";
@@ -77,7 +77,7 @@ TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
                         .lessThanOrEqual(21)
                         .build();
 
-                        
+
   intervalTree.insert(iv,v1);
   intervalTree.insert(i2,v2);
   intervalTree.insert(i3,v3);
@@ -95,17 +95,12 @@ TEST_F(IntervalTreeTest, InsertDuplicateIntervals) {
                         .lessThanOrEqual(24)
                         .build();
 
-                        
-  intervalTree.insert(i1,v1);
-  intervalTree.insert(i2,v2);
-  intervalTree.insert(i3,v3);
-  intervalTree.insert(iv,v2);
+
   intervalTree.insert(i4,v4);
- 
+  intervalTree.insert(iv,v4);
 
   Interval i(24,24);
 
   ASSERT_THAT(intervalTree.find(i), ElementsAre("1624"));
 
 }
-
