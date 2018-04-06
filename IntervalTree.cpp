@@ -75,3 +75,45 @@ std::set<std::string> IntervalTree::find(Interval &interval) {
     return collector;
   }
 }
+
+
+int IntervalTree::maxDepth() {
+  return maxDepth(root);
+}
+
+int IntervalTree::maxDepth(Node *x) {
+  if(x == nullptr ) {
+    return 0;
+  } else {
+      int ldepth = maxDepth(x->left);
+      int rdepth = maxDepth(x->right);
+      if (ldepth > rdepth) {
+        return ldepth + 1;
+    } else  {
+        return rdepth + 1;
+    }
+  }
+}
+
+void IntervalTree::print() {
+  int h = maxDepth();
+  for(int i = 1 ; i<=h ; i++) {
+    print(root,i);
+    std::cout << "|" << std::endl;
+  }
+}
+
+void IntervalTree::print (Node * x, int level)
+{
+  if (x == nullptr)
+      return;
+  if (level == 1)
+      std::cout << x->interval.getStart() << "," << x->interval.getEnd() << std::endl;
+  else if (level > 1)
+  {
+      std::cout << "/" << std::endl;
+      print(x->left, level-1);
+      std::cout << "\\" << std::endl;
+      print(x->right, level-1);
+  }
+}

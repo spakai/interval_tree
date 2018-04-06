@@ -64,7 +64,7 @@ TEST_F(IntervalTreeTest, SearchFailedBecauseNoOverlappingInterval) {
   intervalTree.insert(i2,s2);
   intervalTree.insert(i3,s3);
 
-  Interval i(10,10) ;
+  Interval i(10,15) ;
 
   ASSERT_THROW(intervalTree.find(i), NoMatchException);
 }
@@ -86,6 +86,7 @@ TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
   intervalTree.insert(i4,s4);
 
   Interval i(24,24);
+  intervalTree.print();
 
   ASSERT_THAT(intervalTree.find(i), ElementsAre(s4));
 
@@ -97,13 +98,15 @@ TEST_F(IntervalTreeTest, InsertDuplicateIntervals) {
                         .lessThanOrEqual(24)
                         .build();
 
-  std::string s1 = "1624";
-
+  std::string s1 = "1624a";
+  std::string s2 = "1624b";
   intervalTree.insert(iv,s1);
-  intervalTree.insert(iv,s1);
+  intervalTree.insert(iv,s2);
 
   Interval i(24,24);
 
-  ASSERT_THAT(intervalTree.find(i), ElementsAre(s1));
+
+
+  ASSERT_THAT(intervalTree.find(i), ElementsAre(s1,s2));
 
 }
