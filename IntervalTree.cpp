@@ -29,7 +29,6 @@ void IntervalTree::insert(Interval &interval, std::string &value) {
     }
   }
 
-
   if (key < parent->interval.getStart()) {
     parent->left = createNode(interval, value);
   } else {
@@ -52,10 +51,6 @@ Node* IntervalTree::createNode(Interval &interval, std::string &value) {
 }
 
 std::set<std::string> IntervalTree::find(Interval &interval) {
-  if ( root == nullptr) {
-    throw NoMatchException("No match found");
-  }
-
   Node* curr = root;
   while (curr != nullptr) {
 
