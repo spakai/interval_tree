@@ -28,9 +28,9 @@ TEST_F(IntervalTreeTest, SearchSuccessfulWhenRootOverlapsTheInterval) {
   intervalTree.insert(i2,s2);
   intervalTree.insert(i3,s3);
 
-  Interval i(17,17);
+  Interval i(17,25);
 
-  ASSERT_THAT(intervalTree.find(i), ElementsAre(s1));
+  ASSERT_THAT(intervalTree.find(i), ElementsAre(s1,s2));
 
 }
 
@@ -70,7 +70,7 @@ TEST_F(IntervalTreeTest, SearchFailedBecauseNoOverlappingInterval) {
 }
 
 TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
-  
+
   Interval i1(16,21);
   Interval i2(25,30);
   Interval i3(8,9);

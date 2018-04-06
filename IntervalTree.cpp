@@ -52,10 +52,11 @@ Node* IntervalTree::createNode(Interval &interval, std::string &value) {
 
 std::set<std::string> IntervalTree::find(Interval &interval) {
   Node* curr = root;
+  std::set<std::string> collector;
   while (curr != nullptr) {
 
       if(curr->interval.doTheyOverlap(interval)) {
-        return curr->values;
+        collector.insert(curr->values.begin(),curr->values.end());
       }
 
       auto key = interval.getStart();
@@ -68,5 +69,9 @@ std::set<std::string> IntervalTree::find(Interval &interval) {
 
   }
 
-  throw NoMatchException("No match found");
+  if(collector.size() == 0) {
+    throw NoMatchException("No match found");
+  } else {
+    return collector;
+  }
 }

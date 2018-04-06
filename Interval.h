@@ -17,9 +17,9 @@ class Interval {
     }
 
     bool doTheyOverlap(Interval& interval) {
-      bool b1 = this->start <= interval.end;
-      bool b2 = interval.start <=this->end;
-      return b1 && b2;
+      bool cond1 = this->start <= interval.end;
+      bool cond2 = interval.start <=this->end;
+      return cond1 && cond2;
     }
 
     bool operator==(const Interval &i1){
