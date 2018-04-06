@@ -1,5 +1,5 @@
 #pragma once
-
+#include <queue>
 #include <set>
 #include <string>
 #include <iostream>
@@ -12,13 +12,10 @@ class IntervalTree {
         IntervalTree();
         void insert(Interval &i, std::string &value);
         std::set<std::string> find(Interval &i);
-        void print ();
-        int maxDepth();
-
+        int bfs();
 
     private:
         Node* createNode(Interval &i, std::string &value);
-        void print (Node * x, int id);
-        int maxDepth(Node *x);
+        int bfs(Node* x);
         Node* root;
 };

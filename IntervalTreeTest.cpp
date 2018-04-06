@@ -86,7 +86,8 @@ TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
   intervalTree.insert(i4,s4);
 
   Interval i(24,24);
-  intervalTree.print();
+
+  intervalTree.bfs();
 
   ASSERT_THAT(intervalTree.find(i), ElementsAre(s4));
 
