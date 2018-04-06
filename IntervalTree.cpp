@@ -86,18 +86,26 @@ int IntervalTree::bfs(Node* x) {
   q.push(x);
 
   while(! q.empty()) {
-    Node *n = q.front();
-    std::cout << n->interval.getStart() << "-" << n->interval.getEnd() << std::endl;
 
-    if(n->left != nullptr) {
-      q.push(n->left);
+    int levelNodes = q.size();
+    while(levelNodes > 0) {
+      Node *n = q.front();
+
+      std::cout << n->interval.getStart() << "-" << n->interval.getEnd() << " " ;
+
+      if(n->left != nullptr) {
+        q.push(n->left);
+      }
+
+      if(n->right != nullptr) {
+        q.push(n->right);
+      }
+
+      levelNodes--;
+
+      q.pop();
     }
 
-    if(n->right != nullptr) {
-      q.push(n->right);
-    }
-
-    q.pop();
-
+      std::cout << std::endl;
   }
 }
