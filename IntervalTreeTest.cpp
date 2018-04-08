@@ -1,6 +1,5 @@
 #include "gmock/gmock.h"
 #include "IntervalTree.h"
-#include "Interval.h"
 
 using namespace testing;
 
@@ -105,7 +104,8 @@ TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
   Interval i(730,920);
 
   intervalTree.bfs();
-
+  int heightL = intervalTree.height(Direction::left);
+  std::cout << "Left depth " << heightL << std::endl;
   ASSERT_THAT(intervalTree.find(i), ElementsAre(s1,s2,s3));
 
 }

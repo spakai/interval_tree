@@ -77,6 +77,19 @@ std::set<std::string> IntervalTree::find(Interval &interval) {
 }
 
 
+int IntervalTree::height(Direction direction) {
+  return height(direction,root);
+}
+
+int IntervalTree::height(Direction direction, Node* x) {
+  if(x == nullptr) return 0;
+  if(direction == Direction::left) 
+   return(1 + height(Direction::left,x->left)); 
+  else 
+   return(1 + height(Direction::left,x->right)); 
+
+}
+
 int IntervalTree::bfs() {
   bfs(root);
 }
