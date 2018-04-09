@@ -86,7 +86,7 @@ int IntervalTree::height(Direction direction, Node* x) {
   if(direction == Direction::left) 
    return(1 + height(Direction::left,x->left)); 
   else 
-   return(1 + height(Direction::left,x->right)); 
+   return(1 + height(Direction::right,x->right)); 
 
 }
 

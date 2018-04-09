@@ -6,9 +6,10 @@
 #include "Node.h"
 #include "NoMatchException.h"
 
+enum class Direction { left, right };
+ 
 class IntervalTree {
     public:
-        enum class Direction { left, right };
         IntervalTree();
         void insert(Interval &i, std::string &value);
         std::set<std::string> find(Interval &i);

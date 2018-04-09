@@ -105,7 +105,13 @@ TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
 
   intervalTree.bfs();
   int heightL = intervalTree.height(Direction::left);
+  int heightR = intervalTree.height(Direction::right);
+
+
+
   std::cout << "Left depth " << heightL << std::endl;
+  std::cout << "Right depth " << heightR << std::endl;
+ 
   ASSERT_THAT(intervalTree.find(i), ElementsAre(s1,s2,s3));
 
 }
