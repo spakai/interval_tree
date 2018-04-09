@@ -77,6 +77,10 @@ std::set<std::string> IntervalTree::find(Interval &interval) {
 }
 
 
+int IntervalTree::balanceFactor() {
+    return height(Direction::left) - height(Direction::right);
+}
+
 int IntervalTree::height(Direction direction) {
   return height(direction,root);
 }
@@ -88,6 +92,20 @@ int IntervalTree::height(Direction direction, Node* x) {
   else 
    return(1 + height(Direction::right,x->right)); 
 
+}
+
+Node * IntervalTree::rotateLeft(Node* x) {
+    Node * newRoot = x->right;
+    x->right = x->right->left;
+    newRoot->left = x;
+    return newRoot;
+}
+
+Node * IntervalTree::rotateRight(Node* x) {
+    Node * newRoot = x->left;
+    x->left = x->left->right;
+    newRoot->right = x;
+    return newRoot;
 }
 
 int IntervalTree::bfs() {

@@ -13,6 +13,9 @@ class IntervalTree {
         IntervalTree();
         void insert(Interval &i, std::string &value);
         std::set<std::string> find(Interval &i);
+        Node * rotateLeft(Node* x);
+        Node * rotateRight(Node* x);
+        int balanceFactor();
         int height(Direction direction);
         int height(Direction direction, Node* x);
         int bfs();

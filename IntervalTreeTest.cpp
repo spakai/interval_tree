@@ -111,7 +111,7 @@ TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
 
   std::cout << "Left depth " << heightL << std::endl;
   std::cout << "Right depth " << heightR << std::endl;
- 
+  std::cout << "Balance factor" << intervalTree.balanceFactor() << std::endl; 
   ASSERT_THAT(intervalTree.find(i), ElementsAre(s1,s2,s3));
 
 }
