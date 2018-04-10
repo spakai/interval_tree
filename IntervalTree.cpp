@@ -35,9 +35,11 @@ void IntervalTree::insert(Interval &interval, std::string &value) {
     parent->right = createNode(interval, value);
   }
 
-  if (parent->max < key) {
-    parent->max = key;
+  if (parent->max < interval.getEnd()) {
+    parent->max = interval.getEnd();
   }
+ 
+
 }
 
 Node* IntervalTree::createNode(Interval &interval, std::string &value) {
@@ -53,13 +55,14 @@ Node* IntervalTree::createNode(Interval &interval, std::string &value) {
 std::set<std::string> IntervalTree::find(Interval &interval) {
   Node* curr = root;
   std::set<std::string> collector;
+
+  auto key = interval.getStart();
+
   while (curr != nullptr) {
 
       if(curr->interval.doTheyOverlap(interval)) {
         collector.insert(curr->values.begin(),curr->values.end());
       }
-
-      auto key = interval.getStart();
 
       if(curr->left != nullptr && curr->left->max >= key) {
         curr = curr->left;
@@ -122,7 +125,7 @@ int IntervalTree::bfs(Node* x) {
     while(levelNodes > 0) {
       Node *n = q.front();
 
-      std::cout << n->interval.getStart() << "-" << n->interval.getEnd() << " " ;
+      std::cout << n->interval.getStart() << "-" << n->interval.getEnd() << "(" << n->max << ")";
 
       if(n->left != nullptr) {
         q.push(n->left);

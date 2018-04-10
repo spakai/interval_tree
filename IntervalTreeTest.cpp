@@ -71,47 +71,90 @@ TEST_F(IntervalTreeTest, SearchFailedBecauseNoOverlappingInterval) {
 TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
 
   Interval i1 = IntervalBuilder()
-                        .greaterThanOrEqual(700)
-                        .lessThanOrEqual(800)
+                        .greaterThanOrEqual(16)
+                        .lessThanOrEqual(21)
                         .build();
 
   Interval i2 = IntervalBuilder()
-                        .greaterThanOrEqual(800)
-                        .lessThanOrEqual(900)
+                        .greaterThanOrEqual(8)
+                        .lessThanOrEqual(9)
                         .build();
 
   Interval i3 = IntervalBuilder()
-                        .greaterThanOrEqual(900)
-                        .lessThanOrEqual(915)
+                        .greaterThanOrEqual(25)
+                        .lessThanOrEqual(30)
                         .build();
 
   Interval i4 = IntervalBuilder()
-                        .greaterThanOrEqual(930)
-                        .lessThanOrEqual(1130)
+                        .greaterThanOrEqual(17)
+                        .lessThanOrEqual(19)
                         .build();
 
-  std::string s1 = "700-800";
-  std::string s2 = "800-900";
-  std::string s3 = "900-915";
-  std::string s4 = "930-1130";
+  Interval i5 = IntervalBuilder()
+                        .greaterThanOrEqual(26)
+                        .lessThanOrEqual(26)
+                        .build();
+
+  Interval i6 = IntervalBuilder()
+                        .greaterThanOrEqual(5)
+                        .lessThanOrEqual(8)
+                        .build();
+
+  Interval i7 = IntervalBuilder()
+                        .greaterThanOrEqual(15)
+                        .lessThanOrEqual(23)
+                        .build();
+
+  Interval i8 = IntervalBuilder()
+                        .greaterThanOrEqual(0)
+                        .lessThanOrEqual(3)
+                        .build();
+
+  Interval i9 = IntervalBuilder()
+                        .greaterThanOrEqual(6)
+                        .lessThanOrEqual(10)
+                        .build();
+
+  Interval i10 = IntervalBuilder()
+                        .greaterThanOrEqual(19)
+                        .lessThanOrEqual(20)
+                        .build();
+
+
+
+  std::string s1 = "1621";
+  std::string s2 = "0809";
+  std::string s3 = "2530";
+  std::string s4 = "1719";
+  std::string s5 = "2626";
+  std::string s6 = "0508";
+  std::string s7 = "1523";
+  std::string s8 = "0003";
+  std::string s9 = "0610";
+  std::string s10 = "1920";
 
 
   intervalTree.insert(i1,s1);
   intervalTree.insert(i2,s2);
   intervalTree.insert(i3,s3);
   intervalTree.insert(i4,s4);
+  intervalTree.insert(i5,s5);
+  intervalTree.insert(i6,s6);
+  intervalTree.insert(i7,s7);
+  intervalTree.insert(i8,s8);
+  intervalTree.insert(i9,s9);
+  intervalTree.insert(i10,s10);
 
-  Interval i(730,920);
+
+  Interval i(15,20); //1719,2124,1518
 
   intervalTree.bfs();
   int heightL = intervalTree.height(Direction::left);
   int heightR = intervalTree.height(Direction::right);
 
-
-
-  std::cout << "Left depth " << heightL << std::endl;
-  std::cout << "Right depth " << heightR << std::endl;
-  std::cout << "Balance factor" << intervalTree.balanceFactor() << std::endl; 
+  std::cout << "Left depth:" << heightL << std::endl;
+  std::cout << "Right depth:" << heightR << std::endl;
+  std::cout << "Balance factor:" << intervalTree.balanceFactor() << std::endl; 
   ASSERT_THAT(intervalTree.find(i), ElementsAre(s1,s2,s3));
 
 }
