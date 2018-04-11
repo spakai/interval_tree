@@ -16,13 +16,13 @@ class IntervalTree {
         int balanceFactor();
         int height(Direction direction);
         int bfs();
+        void rotateLeft(Node* x);
+        void rotateRight(Node* x);
 
     private:
         Node* createNode(Interval &i, std::string &value);
         void find(Interval &i,Node* x, std::set<std::string> & collector);
         int height(Direction direction, Node* x);
         int bfs(Node* x);
-        Node * rotateLeft(Node* x);
-        Node * rotateRight(Node* x);
         Node* root;
 };

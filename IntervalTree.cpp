@@ -39,6 +39,13 @@ void IntervalTree::insert(Interval &interval, std::string &value) {
     parent->max = interval.getEnd();
   }
 
+  if(balanceFactor() > 1) {
+    rotateRight(root);
+  } else if(balanceFactor() < -1) {
+    rotateLeft(root);
+  } else {
+    //do nothing
+  }
 
 }
 
@@ -102,18 +109,18 @@ int IntervalTree::height(Direction direction, Node* x) {
 
 }
 
-Node * IntervalTree::rotateLeft(Node* x) {
+void IntervalTree::rotateLeft(Node* x) {
     Node * newRoot = x->right;
     x->right = x->right->left;
     newRoot->left = x;
-    return newRoot;
+    root =  newRoot;
 }
 
-Node * IntervalTree::rotateRight(Node* x) {
+void IntervalTree::rotateRight(Node* x) {
     Node * newRoot = x->left;
     x->left = x->left->right;
     newRoot->right = x;
-    return newRoot;
+    root = newRoot;
 }
 
 int IntervalTree::bfs() {
@@ -145,6 +152,7 @@ int IntervalTree::bfs(Node* x) {
       q.pop();
     }
 
+      std::cout << std::endl;
       std::cout << std::endl;
   }
 }

@@ -146,7 +146,7 @@ TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
   intervalTree.insert(i10,s10);
 
 
-  Interval i(15,20); 
+  Interval i(15,20);
 
   intervalTree.bfs();
   int heightL = intervalTree.height(Direction::left);
@@ -154,7 +154,8 @@ TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
 
   std::cout << "Left depth:" << heightL << std::endl;
   std::cout << "Right depth:" << heightR << std::endl;
-  std::cout << "Balance factor:" << intervalTree.balanceFactor() << std::endl; 
+  std::cout << "Balance factor:" << intervalTree.balanceFactor() << std::endl;
+
 
   ASSERT_THAT(intervalTree.find(i), ElementsAre(s7,s1,s4,s10));
 
@@ -177,4 +178,45 @@ TEST_F(IntervalTreeTest, InsertDuplicateIntervals) {
 
   ASSERT_THAT(intervalTree.find(i), ElementsAre(s1,s2));
 
+}
+
+TEST_F(IntervalTreeTest, Rebalanced) {
+
+Interval i1 = IntervalBuilder()
+                        .greaterThanOrEqual(700)
+                        .lessThanOrEqual(800)
+                        .build();
+
+Interval i2 = IntervalBuilder()
+                        .greaterThanOrEqual(900)
+                        .lessThanOrEqual(1000)
+                        .build();
+
+ Interval i3 = IntervalBuilder()
+                        .greaterThanOrEqual(1100)
+                        .lessThanOrEqual(1200)
+                        .build();
+
+  std::string s1 = "0708";
+  std::string s2 = "0910";
+  std::string s3 = "1112";
+
+  intervalTree.insert(i1,s1);
+  intervalTree.insert(i2,s2);
+  intervalTree.insert(i3,s3);
+
+  Interval i = IntervalBuilder()
+                        .greaterThanOrEqual(730)
+                        .lessThanOrEqual(930)
+                        .build();
+
+  intervalTree.bfs();
+  int heightL = intervalTree.height(Direction::left);
+  int heightR = intervalTree.height(Direction::right);
+
+  std::cout << "Left depth:" << heightL << std::endl;
+  std::cout << "Right depth:" << heightR << std::endl;
+  std::cout << "Balance factor:" << intervalTree.balanceFactor() << std::endl;
+
+  ASSERT_THAT(intervalTree.find(i), ElementsAre(s1,s2));
 }
