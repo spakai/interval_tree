@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Node.h"
 #include "NoMatchException.h"
+#include "algorithm"
 
 enum class Direction { left, right };
 

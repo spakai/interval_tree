@@ -41,6 +41,8 @@ void IntervalTree::insert(Interval &interval, std::string &value) {
 
   if(balanceFactor() > 1) {
     rotateRight(root);
+    root->max = std::max(root->max, std::max(root->left->max, root->right->max));
+
   } else if(balanceFactor() < -1) {
     rotateLeft(root);
   } else {
