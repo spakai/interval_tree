@@ -38,7 +38,7 @@ void IntervalTree::insert(Interval &interval, std::string &value) {
   if (parent->max < interval.getEnd()) {
     parent->max = interval.getEnd();
   }
- 
+
 
 }
 
@@ -52,25 +52,11 @@ Node* IntervalTree::createNode(Interval &interval, std::string &value) {
   return node;
 }
 
+
 std::set<std::string> IntervalTree::find(Interval &interval) {
-  Node* curr = root;
   std::set<std::string> collector;
 
-  auto key = interval.getStart();
-
-  while (curr != nullptr) {
-
-      if(curr->interval.doTheyOverlap(interval)) {
-        collector.insert(curr->values.begin(),curr->values.end());
-      }
-
-      if(curr->left != nullptr && curr->left->max >= key) {
-        curr = curr->left;
-      } else {
-        curr = curr->right;
-      }
-
-  }
+  find(interval, root, collector);
 
   if(collector.size() == 0) {
     throw NoMatchException("No match found");
@@ -79,6 +65,25 @@ std::set<std::string> IntervalTree::find(Interval &interval) {
   }
 }
 
+void IntervalTree::find(Interval &interval , Node * node, std::set<std::string> & collector) {
+
+  if(node == nullptr) {
+    return;
+  }
+
+  auto key = interval.getStart();
+
+  if(node->interval.doTheyOverlap(interval)) {
+    collector.insert(node->values.begin(), node->values.end());
+  }
+
+  if(node->left != nullptr && node->left->max >= key) {
+    find(interval, node->left, collector);
+  }
+
+  find(interval, node->right, collector);
+
+}
 
 int IntervalTree::balanceFactor() {
     return height(Direction::left) - height(Direction::right);
@@ -90,10 +95,10 @@ int IntervalTree::height(Direction direction) {
 
 int IntervalTree::height(Direction direction, Node* x) {
   if(x == nullptr) return 0;
-  if(direction == Direction::left) 
-   return(1 + height(Direction::left,x->left)); 
-  else 
-   return(1 + height(Direction::right,x->right)); 
+  if(direction == Direction::left)
+   return(1 + height(Direction::left,x->left));
+  else
+   return(1 + height(Direction::right,x->right));
 
 }
 
