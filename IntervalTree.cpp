@@ -55,16 +55,19 @@ void IntervalTree::insert(Interval &interval, std::string &value) {
     parent->max = interval.getEnd();
   }
 
+  balanceTree();
+}
+
+void IntervalTree::balanceTree() {
   if(balanceFactor() > 1) {
-    rotateRight(root);
+    rotateRootRight();
     root->max = std::max(root->max, std::max(root->left->max, root->right->max));
   } else if(balanceFactor() < -1) {
-    rotateLeft(root);
+    rotateRootLeft();
     root->max = std::max(root->max, std::max(root->left->max, root->right->max));
   } else {
     //nicely balanced
   }
-
 }
 
 Node* IntervalTree::createNode(Interval &interval, std::string &value) {
@@ -76,7 +79,6 @@ Node* IntervalTree::createNode(Interval &interval, std::string &value) {
   node->values.insert(value);
   return node;
 }
-
 
 std::set<std::string> IntervalTree::find(Interval &interval) {
   std::set<std::string> collector;
@@ -127,17 +129,17 @@ int IntervalTree::height(Direction direction, Node* x) {
 
 }
 
-void IntervalTree::rotateLeft(Node* x) {
-    Node * newRoot = x->right;
-    x->right = x->right->left;
-    newRoot->left = x;
-    root =  newRoot;
+void IntervalTree::rotateRootLeft() {
+    Node * newRoot = root->right;
+    root->right = root->right->left;
+    newRoot->left = root;
+    root = newRoot;
 }
 
-void IntervalTree::rotateRight(Node* x) {
-    Node * newRoot = x->left;
-    x->left = x->left->right;
-    newRoot->right = x;
+void IntervalTree::rotateRootRight() {
+    Node * newRoot = root->left;
+    root->left = root->left->right;
+    newRoot->right = root;
     root = newRoot;
 }
 

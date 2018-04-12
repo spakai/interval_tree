@@ -133,15 +133,15 @@ TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
   std::string s9 = "0610";
   std::string s10 = "1920";
 
-
+  intervalTree.insert(i8,s8);
   intervalTree.insert(i1,s1);
   intervalTree.insert(i2,s2);
   intervalTree.insert(i3,s3);
   intervalTree.insert(i4,s4);
   intervalTree.insert(i5,s5);
   intervalTree.insert(i6,s6);
+  //intervalTree.insert(i8,s8);
   intervalTree.insert(i7,s7);
-  intervalTree.insert(i8,s8);
   intervalTree.insert(i9,s9);
   intervalTree.insert(i10,s10);
 
@@ -149,13 +149,7 @@ TEST_F(IntervalTreeTest, InsertOverlapIntervals) {
   Interval i(15,20);
 
   intervalTree.bfs();
-  int heightL = intervalTree.height(Direction::left);
-  int heightR = intervalTree.height(Direction::right);
-
-  std::cout << "Left depth:" << heightL << std::endl;
-  std::cout << "Right depth:" << heightR << std::endl;
-  std::cout << "Balance factor:" << intervalTree.balanceFactor() << std::endl;
-
+  
 
   ASSERT_THAT(intervalTree.find(i), ElementsAre(s7,s1,s4,s10));
 
@@ -210,8 +204,6 @@ Interval i2 = IntervalBuilder()
                         .lessThanOrEqual(930)
                         .build();
 
-  intervalTree.bfs();
-
 
   ASSERT_THAT(intervalTree.find(i), ElementsAre(s1,s2));
 }
@@ -247,7 +239,7 @@ Interval i2 = IntervalBuilder()
                         .lessThanOrEqual(930)
                         .build();
 
-  intervalTree.bfs();
+
 
 
   ASSERT_THAT(intervalTree.find(i), ElementsAre(s1,s2));
