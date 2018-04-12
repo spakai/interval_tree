@@ -12,6 +12,7 @@ enum class Direction { left, right };
 class IntervalTree {
     public:
         IntervalTree();
+        ~IntervalTree();
         void insert(Interval &i, std::string &value);
         std::set<std::string> find(Interval &i);
         int balanceFactor();
@@ -25,5 +26,6 @@ class IntervalTree {
         void find(Interval &i,Node* x, std::set<std::string> & collector);
         int height(Direction direction, Node* x);
         int bfs(Node* x);
+        void deleteNode(Node* x);
         Node* root;
 };

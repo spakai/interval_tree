@@ -4,6 +4,22 @@ IntervalTree::IntervalTree() {
   root = nullptr;
 }
 
+IntervalTree::~IntervalTree() {
+  deleteNode(root);
+}
+
+void IntervalTree::deleteNode(Node *x) {
+
+  if(x == nullptr) {
+    return;
+  }
+
+  deleteNode(x->left);
+  deleteNode(x->right);
+
+  delete x;
+}
+
 void IntervalTree::insert(Interval &interval, std::string &value) {
 
   auto key = interval.getStart();
@@ -42,11 +58,11 @@ void IntervalTree::insert(Interval &interval, std::string &value) {
   if(balanceFactor() > 1) {
     rotateRight(root);
     root->max = std::max(root->max, std::max(root->left->max, root->right->max));
-
   } else if(balanceFactor() < -1) {
     rotateLeft(root);
+    root->max = std::max(root->max, std::max(root->left->max, root->right->max));
   } else {
-    //do nothing
+    //nicely balanced
   }
 
 }
