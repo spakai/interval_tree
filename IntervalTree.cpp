@@ -4,58 +4,41 @@ IntervalTree::IntervalTree() {
   root = nullptr;
 }
 
-IntervalTree::~IntervalTree() {
-  deleteNode(root);
-}
-
-void IntervalTree::deleteNode(Node *x) {
-
-  if(x == nullptr) {
-    return;
-  }
-
-  deleteNode(x->left);
-  deleteNode(x->right);
-
-  delete x;
-}
-
 void IntervalTree::insert(Interval &interval, std::string &value) {
+
+  root = insert(root, interval, value);
+
+  balanceTree();
+}
+
+Node* IntervalTree::insert(Node * x, Interval & interval, std::string &value) {
+  if (x == nullptr) {
+    return createNode(interval, value);
+  }
 
   auto key = interval.getStart();
 
-  if ( root == nullptr) {
-    root = createNode(interval, value);
-    return;
-  }
-
-  Node* parent = nullptr;
-  Node* curr = root;
-
-  while (curr != nullptr) {
-    parent = curr;
-
-    if (curr->interval == interval) {
-        curr->values.insert(value);
-        return;
-    } else if (key < curr->interval.getStart()) {
-        curr = curr->left;
-    } else {
-        curr = curr->right;
-    }
-  }
-
-  if (key < parent->interval.getStart()) {
-    parent->left = createNode(interval, value);
+  if(key < x->interval.getStart()) {
+    x->left = insert(x->left, interval, value);
   } else {
-    parent->right = createNode(interval, value);
+    x->right = insert(x->right,interval,value);
   }
 
-  if (parent->max < interval.getEnd()) {
-    parent->max = interval.getEnd();
+  if(x->max < interval.getEnd()) {
+    x->max = interval.getEnd();
   }
 
-  balanceTree();
+  return x;
+}
+
+Node* IntervalTree::createNode(Interval &interval, std::string &value) {
+  Node* node = new Node();
+  node->left = nullptr;
+  node->right = nullptr;
+  node->interval = interval;
+  node->max = interval.getEnd();
+  node->values.insert(value);
+  return node;
 }
 
 void IntervalTree::balanceTree() {
@@ -68,16 +51,6 @@ void IntervalTree::balanceTree() {
   } else {
     //nicely balanced
   }
-}
-
-Node* IntervalTree::createNode(Interval &interval, std::string &value) {
-  Node* node = new Node();
-  node->left = nullptr;
-  node->right = nullptr;
-  node->interval = interval;
-  node->max = interval.getEnd();
-  node->values.insert(value);
-  return node;
 }
 
 std::set<std::string> IntervalTree::find(Interval &interval) {
@@ -143,11 +116,11 @@ void IntervalTree::rotateRootRight() {
     root = newRoot;
 }
 
-int IntervalTree::bfs() {
+void IntervalTree::bfs() {
   bfs(root);
 }
 
-int IntervalTree::bfs(Node* x) {
+void IntervalTree::bfs(Node* x) {
   std::queue<Node*> q;
   q.push(x);
 
@@ -175,4 +148,20 @@ int IntervalTree::bfs(Node* x) {
       std::cout << std::endl;
       std::cout << std::endl;
   }
+}
+
+IntervalTree::~IntervalTree() {
+  deleteNode(root);
+}
+
+void IntervalTree::deleteNode(Node *x) {
+
+  if(x == nullptr) {
+    return;
+  }
+
+  deleteNode(x->left);
+  deleteNode(x->right);
+
+  delete x;
 }
